@@ -97,8 +97,7 @@ The server is production-ready and includes:
 **Deprecations**: None
 
 ### Contributors
-- Open Source Community
-- Generated with AI assistance
+- Thiago Barros (@thiagojbs) - Lead Developer
 
 ---
 

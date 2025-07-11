@@ -16,7 +16,7 @@ Before creating an issue, please:
 1. **Fork the repository**
    ```bash
    # Click "Fork" on GitHub, then:
-   git clone https://github.com/yourusername/sgp-mcp-server.git
+   git clone https://github.com/thiagojbs/sgp-mcp-server.git
    cd sgp-mcp-server
    ```
 
@@ -294,9 +294,9 @@ CACHE_TTL_SECONDS=300
 
 ## ❓ Getting Help
 
-- Check existing [Issues](https://github.com/yourusername/sgp-mcp-server/issues)
+- Check existing [Issues](https://github.com/thiagojbs/sgp-mcp-server/issues)
 - Read the [Documentation](README.md)
-- Ask in [Discussions](https://github.com/yourusername/sgp-mcp-server/discussions)
+- Ask in [Discussions](https://github.com/thiagojbs/sgp-mcp-server/discussions)
 - Review [Examples](examples/)
 
 ## 🙏 Recognition

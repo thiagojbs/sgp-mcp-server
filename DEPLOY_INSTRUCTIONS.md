@@ -256,6 +256,6 @@ Create `.github/ISSUE_TEMPLATE/bug_report.md` and `feature_request.md`
 
 ---
 
-**Repository URL**: https://github.com/yourusername/sgp-mcp-server
-**Live Demo**: https://sgp-mcp-server.yourusername.workers.dev
-**API Docs**: https://sgp-mcp-server.yourusername.workers.dev/docs
+**Repository URL**: https://github.com/thiagojbs/sgp-mcp-server
+**Live Demo**: https://sgp-mcp-server.thiagojbs.workers.dev
+**API Docs**: https://sgp-mcp-server.thiagojbs.workers.dev/docs

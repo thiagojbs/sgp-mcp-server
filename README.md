@@ -17,7 +17,7 @@ A Model Context Protocol (MCP) server for integrating with SGP (Sistema de Gest√
 ### Installation
 
 ```bash
-git clone https://github.com/your-org/sgp-mcp-server.git
+git clone https://github.com/thiagojbs/sgp-mcp-server.git
 cd sgp-mcp-server
 npm install
 ```
@@ -238,7 +238,7 @@ sudo npm install -g pm2
 2. **Deploy application:**
 ```bash
 # Clone repository
-git clone https://github.com/your-org/sgp-mcp-server.git
+git clone https://github.com/thiagojbs/sgp-mcp-server.git
 cd sgp-mcp-server
 
 # Install dependencies
