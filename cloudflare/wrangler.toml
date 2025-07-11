@@ -1,0 +1,32 @@
+name = "sgp-mcp-server"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+[env.production]
+name = "sgp-mcp-server"
+
+[env.development]
+name = "sgp-mcp-server-dev"
+
+# Environment variables for SGP API
+[vars]
+SGP_APP_NAME = "sgp-mcp-worker"
+
+# Secrets (set these using `wrangler secret put <name>`)
+# wrangler secret put SGP_BASE_URL
+# wrangler secret put SGP_USERNAME
+# wrangler secret put SGP_PASSWORD  
+# wrangler secret put SGP_API_TOKEN
+
+# Custom domains (configure as needed)
+# [[env.production.routes]]
+# pattern = "sgp-mcp.your-domain.com/*"
+# zone_name = "your-domain.com"
+
+# Worker configuration
+[build]
+command = ""
+
+# Limits
+[limits]
+cpu_ms = 50
