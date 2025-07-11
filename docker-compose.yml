@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  sgp-mcp-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - LOG_LEVEL=info
+      - SGP_BASE_URL=${SGP_BASE_URL:-https://demo.sgp.net.br/api}
+      - SGP_API_TOKEN=${SGP_API_TOKEN}
+      - SGP_USERNAME=${SGP_USERNAME}
+      - SGP_PASSWORD=${SGP_PASSWORD}
+      - SGP_APP_NAME=${SGP_APP_NAME:-sgp-mcp-server}
+      - CACHE_TTL_SECONDS=${CACHE_TTL_SECONDS:-300}
+      - CACHE_MAX_KEYS=${CACHE_MAX_KEYS:-1000}
+      - RATE_LIMIT_WINDOW_MS=${RATE_LIMIT_WINDOW_MS:-60000}
+      - RATE_LIMIT_MAX_REQUESTS_BASIC=${RATE_LIMIT_MAX_REQUESTS_BASIC:-100}
+      - RATE_LIMIT_MAX_REQUESTS_TOKEN=${RATE_LIMIT_MAX_REQUESTS_TOKEN:-300}
+      - RATE_LIMIT_MAX_REQUESTS_CPF_CNPJ=${RATE_LIMIT_MAX_REQUESTS_CPF_CNPJ:-50}
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - sgp-mcp-server
+    restart: unless-stopped
+    profiles:
+      - with-proxy
+
+networks:
+  default:
+    name: sgp-mcp-network
