@@ -1,0 +1,33 @@
+name = "sgp-mcp-server"
+main = "src/worker/remote-mcp-server.ts"
+compatibility_date = "2024-07-01"
+compatibility_flags = ["nodejs_compat"]
+
+[env.production]
+name = "sgp-mcp-server"
+routes = [
+  { pattern = "sgp-api.workers.dev/*", zone_name = "workers.dev" }
+]
+
+[vars]
+NODE_ENV = "production"
+SGP_BASE_URL = "https://dmznet.sgp.tsmx.com.br/api"
+SGP_TIMEOUT = "30000"
+
+# Configurar no dashboard do Cloudflare:
+# SGP_USERNAME (secret)
+# SGP_PASSWORD (secret) 
+# SGP_API_TOKEN (secret)
+# SGP_APP_NAME (secret)
+
+# KV namespace configuration (create via dashboard first)
+# [[kv_namespaces]]
+# binding = "SGP_CACHE"
+# id = "your_kv_namespace_id_here"
+# preview_id = "your_preview_namespace_id_here"
+
+[build]
+command = "npm run build:worker"
+
+[observability]
+enabled = true

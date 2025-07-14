@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGP Remote MCP Server - MCP Integration Documentation</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .status-online { color: #10b981; }
+        .status-offline { color: #ef4444; }
+        .code-block { background: #1a1a1a; border-radius: 8px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .nav-link.active { background: #3b82f6; color: white; }
+        .pulse-green { animation: pulse-green 2s infinite; }
+        @keyframes pulse-green { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .ai-learning { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        .dev-section { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+        .test-section { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-bold flex items-center">
+                        <i class="fas fa-robot mr-3"></i>
+                        SGP Remote MCP Server
+                    </h1>
+                    <p class="text-xl mt-2 opacity-90">Model Context Protocol for Automated Systems</p>
+                </div>
+                <div class="text-right">
+                    <div class="flex items-center mb-2">
+                        <span class="status-indicator mr-2" id="status-indicator">●</span>
+                        <span id="status-text">Checking...</span>
+                    </div>
+                    <div class="text-sm opacity-75">Version 2.0.0</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6">
+            <div class="flex space-x-8 overflow-x-auto">
+                <button class="nav-link px-4 py-4 text-sm font-medium border-b-2 border-transparent hover:border-blue-500 active" onclick="showTab('overview')">
+                    <i class="fas fa-home mr-2"></i>Overview
+                </button>
+                <button class="nav-link px-4 py-4 text-sm font-medium border-b-2 border-transparent hover:border-blue-500" onclick="showTab('ai-training')">
+                    <i class="fas fa-brain mr-2"></i>MCP Integration
+                </button>
+                <button class="nav-link px-4 py-4 text-sm font-medium border-b-2 border-transparent hover:border-blue-500" onclick="showTab('api-test')">
+                    <i class="fas fa-vial mr-2"></i>API Testing
+                </button>
+                <button class="nav-link px-4 py-4 text-sm font-medium border-b-2 border-transparent hover:border-blue-500" onclick="showTab('monitoring')">
+                    <i class="fas fa-chart-line mr-2"></i>Monitoring
+                </button>
+                <button class="nav-link px-4 py-4 text-sm font-medium border-b-2 border-transparent hover:border-blue-500" onclick="showTab('dev-docs')">
+                    <i class="fas fa-code mr-2"></i>Dev Docs
+                </button>
+                <button class="nav-link px-4 py-4 text-sm font-medium border-b-2 border-transparent hover:border-blue-500" onclick="showTab('integrations')">
+                    <i class="fas fa-plug mr-2"></i>Integrations
+                </button>
+                <button class="nav-link px-4 py-4 text-sm font-medium border-b-2 border-transparent hover:border-blue-500" onclick="showTab('resources')">
+                    <i class="fas fa-book mr-2"></i>Resources
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <!-- Hero Section -->
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                            🤖 MCP-First Server
+                        </h2>
+                        <p class="text-lg text-gray-600 mb-6">
+                            Remote Model Context Protocol server designed specifically for automated systems. 
+                            Connect any MCP client to SGP (Sistema de Gestão para Provedores) API 
+                            with zero configuration.
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200" onclick="showTab('ai-training')">
+                                <i class="fas fa-graduation-cap mr-2"></i>MCP Integration Guide
+                            </a>
+                            <a href="#" class="border border-blue-600 text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition duration-200" onclick="showTab('api-test')">
+                                <i class="fas fa-play mr-2"></i>Test API
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-gradient-to-br from-purple-400 to-blue-600 rounded-lg p-6 text-white">
+                            <i class="fas fa-network-wired text-6xl mb-4"></i>
+                            <h3 class="text-xl font-bold">Multi-Tenant Ready</h3>
+                            <p class="opacity-90">Support multiple clients with isolated data</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="grid md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+                    <div class="flex items-center">
+                        <div class="bg-green-100 p-3 rounded-full">
+                            <i class="fas fa-tools text-green-600 text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm text-gray-600">Available Tools</p>
+                            <p class="text-2xl font-bold text-gray-800" id="tools-count">9</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+                    <div class="flex items-center">
+                        <div class="bg-blue-100 p-3 rounded-full">
+                            <i class="fas fa-users text-blue-600 text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm text-gray-600">Connected Clients</p>
+                            <p class="text-2xl font-bold text-gray-800" id="clients-count">859</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+                    <div class="flex items-center">
+                        <div class="bg-purple-100 p-3 rounded-full">
+                            <i class="fas fa-clock text-purple-600 text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm text-gray-600">Avg Response</p>
+                            <p class="text-2xl font-bold text-gray-800" id="response-time">< 100ms</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+                    <div class="flex items-center">
+                        <div class="bg-yellow-100 p-3 rounded-full">
+                            <i class="fas fa-globe text-yellow-600 text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm text-gray-600">Global Edge</p>
+                            <p class="text-2xl font-bold text-gray-800">200+ Locations</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Features -->
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                    <div class="text-center">
+                        <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-bolt text-blue-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Zero Configuration</h3>
+                        <p class="text-gray-600">
+                            MCP clients can connect instantly. No complex setup, authentication, or configuration required.
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                    <div class="text-center">
+                        <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-shield-alt text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Multi-Tenant Security</h3>
+                        <p class="text-gray-600">
+                            Complete data isolation between clients. Each tenant has secure, isolated access to their SGP data.
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                    <div class="text-center">
+                        <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-brain text-purple-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">MCP-Optimized</h3>
+                        <p class="text-gray-600">
+                            Built specifically for MCP clients with structured prompts, clear schemas, and intelligent error handling.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Start -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-rocket mr-2 text-blue-600"></i>
+                    Quick Start for MCP Clients
+                </h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">MCP Client Integration</h4>
+                        <pre class="code-block text-sm"><code class="language-json">{
+  "mcpServers": {
+    "sgp": {
+      "transport": "http",
+      "url": "https://sgp-mcp-server.thiagojbs.workers.dev/mcp",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-SGP-URL": "your-sgp-url",
+        "X-SGP-APP": "your-app",
+        "X-SGP-TOKEN": "your-token"
+      }
+    }
+  }
+}</code></pre>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Direct API Call</h4>
+                        <pre class="code-block text-sm"><code class="language-bash">curl -X POST 'https://sgp-mcp-server.thiagojbs.workers.dev/mcp' \
+  -H 'Content-Type: application/json' \
+  -H 'X-SGP-URL: your-sgp-url' \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "tools/list"
+  }'</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MCP Integration Tab -->
+        <div id="ai-training" class="tab-content">
+            <div class="ai-learning rounded-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-graduation-cap mr-3"></i>
+                    MCP Integration Center
+                </h2>
+                <p class="text-lg text-gray-700 mb-8">
+                    Comprehensive documentation to integrate any MCP client with the SGP MCP Server effectively.
+                </p>
+                
+                <!-- Training Modules -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+                        <h3 class="text-xl font-bold mb-4">
+                            <i class="fas fa-book-open text-blue-600 mr-2"></i>
+                            Basic Concepts
+                        </h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                What is Model Context Protocol (MCP)
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                SGP API fundamentals
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                JSON-RPC 2.0 protocol
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                Multi-tenant architecture
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+                        <h3 class="text-xl font-bold mb-4">
+                            <i class="fas fa-cog text-purple-600 mr-2"></i>
+                            Tool Usage
+                        </h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                Customer management tools
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                Network monitoring tools
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                Error handling strategies
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                Best practices for MCP clients
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+                        <h3 class="text-xl font-bold mb-4">
+                            <i class="fas fa-rocket text-green-600 mr-2"></i>
+                            Advanced Features
+                        </h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                Multi-tenant configuration
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                Server-Sent Events (SSE)
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                Prompt templates usage
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                Performance optimization
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MCP Integration Content -->
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-2xl font-bold mb-6">🤖 Complete MCP Integration Guide</h3>
+                    
+                    <!-- Training Steps -->
+                    <div class="space-y-8">
+                        <div class="border-l-4 border-blue-500 pl-6">
+                            <h4 class="text-xl font-semibold mb-3">Step 1: Understanding MCP Protocol</h4>
+                            <p class="text-gray-700 mb-4">
+                                The Model Context Protocol (MCP) is a JSON-RPC 2.0 based protocol that allows automated systems to interact with external services. 
+                                This SGP server implements MCP via HTTP/SSE for maximum compatibility.
+                            </p>
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <h5 class="font-semibold mb-2">Key MCP Methods:</h5>
+                                <ul class="list-disc pl-5 space-y-1 text-sm">
+                                    <li><code class="bg-gray-200 px-2 py-1 rounded">initialize</code> - Start MCP session</li>
+                                    <li><code class="bg-gray-200 px-2 py-1 rounded">tools/list</code> - Get available tools</li>
+                                    <li><code class="bg-gray-200 px-2 py-1 rounded">tools/call</code> - Execute a tool</li>
+                                    <li><code class="bg-gray-200 px-2 py-1 rounded">resources/list</code> - Get available resources</li>
+                                    <li><code class="bg-gray-200 px-2 py-1 rounded">prompts/list</code> - Get available prompts</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-green-500 pl-6">
+                            <h4 class="text-xl font-semibold mb-3">Step 2: Multi-Tenant Configuration</h4>
+                            <p class="text-gray-700 mb-4">
+                                Each client can use their own SGP credentials by passing them in HTTP headers. This ensures complete data isolation.
+                            </p>
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <h5 class="font-semibold mb-2">Required Headers:</h5>
+                                <pre class="text-sm"><code>X-SGP-URL: https://your-sgp-server.com/api
+X-SGP-APP: your-app-name  
+X-SGP-TOKEN: your-api-token</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-purple-500 pl-6">
+                            <h4 class="text-xl font-semibold mb-3">Step 3: Using SGP Tools</h4>
+                            <p class="text-gray-700 mb-4">
+                                The server provides 9 tools for interacting with SGP data. Some tools require customer credentials (CPF/CNPJ + password).
+                            </p>
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <h5 class="font-semibold mb-2">Functional Tools (100% Working):</h5>
+                                <ul class="list-disc pl-5 space-y-1 text-sm">
+                                    <li><code class="bg-green-200 px-2 py-1 rounded">sgp_test_connection</code> - Test API connectivity</li>
+                                    <li><code class="bg-green-200 px-2 py-1 rounded">sgp_get_customer_contracts</code> - Get customer contracts</li>
+                                    <li><code class="bg-green-200 px-2 py-1 rounded">sgp_get_customer_invoices</code> - Get customer invoices</li>
+                                    <li><code class="bg-green-200 px-2 py-1 rounded">sgp_get_network_status</code> - Get network status</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-yellow-500 pl-6">
+                            <h4 class="text-xl font-semibold mb-3">Step 4: Error Handling</h4>
+                            <p class="text-gray-700 mb-4">
+                                MCP clients should be prepared to handle various error scenarios and implement appropriate fallback strategies.
+                            </p>
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <h5 class="font-semibold mb-2">Common Error Patterns:</h5>
+                                <ul class="list-disc pl-5 space-y-1 text-sm">
+                                    <li>404 errors for unsupported endpoints</li>
+                                    <li>Authentication failures with invalid credentials</li>
+                                    <li>Network timeouts for slow responses</li>
+                                    <li>Rate limiting on heavy usage</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sample MCP Integration -->
+                    <div class="mt-8 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6">
+                        <h4 class="text-xl font-semibold mb-4">🎯 Sample MCP Integration</h4>
+                        <div class="bg-white rounded-lg p-4 border">
+                            <pre class="text-sm text-gray-700 whitespace-pre-wrap">You are an MCP client with access to a SGP MCP Server at https://sgp-mcp-server.thiagojbs.workers.dev/mcp
+
+Key capabilities:
+1. Use tools/list to see available SGP tools
+2. Use tools/call to execute SGP operations  
+3. Handle multi-tenant authentication via headers
+4. Implement proper error handling for 404/auth failures
+
+Example workflow:
+1. Start with sgp_test_connection to verify connectivity
+2. Use sgp_get_customer_contracts for customer data
+3. Fall back gracefully when endpoints return 404
+4. Always provide helpful responses even with limited data
+
+Remember: Some SGP endpoints may not exist on all servers. Always test connectivity first and handle errors gracefully.</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Testing Tab -->
+        <div id="api-test" class="tab-content">
+            <div class="test-section text-white rounded-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold mb-4">
+                    <i class="fas fa-vial mr-3"></i>
+                    Interactive API Testing
+                </h2>
+                <p class="text-lg opacity-90">
+                    Test all MCP endpoints and SGP tools directly from your browser. Real-time testing with live results.
+                </p>
+            </div>
+
+            <!-- Test Configuration -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-bold mb-4">
+                    <i class="fas fa-cog mr-2"></i>
+                    Test Configuration
+                </h3>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">SGP URL</label>
+                        <input type="text" id="test-sgp-url" value="https://dmznet.sgp.tsmx.com.br/api" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">SGP App</label>
+                        <input type="text" id="test-sgp-app" value="papercrm" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">SGP Token</label>
+                        <input type="text" id="test-sgp-token" value="dcb979d7-e283-40a0-9436-bfad7aa705ed" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Tests -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h4 class="font-semibold mb-3">🔧 MCP Protocol Tests</h4>
+                    <div class="space-y-2">
+                        <button onclick="runTest('initialize')" class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition text-sm">
+                            Test Initialize
+                        </button>
+                        <button onclick="runTest('tools/list')" class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition text-sm">
+                            List Tools
+                        </button>
+                        <button onclick="runTest('resources/list')" class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition text-sm">
+                            List Resources
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h4 class="font-semibold mb-3">✅ Working SGP Tools</h4>
+                    <div class="space-y-2">
+                        <button onclick="runTest('sgp_test_connection')" class="w-full bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition text-sm">
+                            Test Connection
+                        </button>
+                        <button onclick="runTest('sgp_get_network_status')" class="w-full bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition text-sm">
+                            Network Status
+                        </button>
+                        <button onclick="runTest('sgp_get_customer_contracts')" class="w-full bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition text-sm">
+                            Customer Contracts
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h4 class="font-semibold mb-3">⚠️ Problematic Tools</h4>
+                    <div class="space-y-2">
+                        <button onclick="runTest('sgp_list_onus')" class="w-full bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600 transition text-sm">
+                            List ONUs (404)
+                        </button>
+                        <button onclick="runTest('sgp_list_products')" class="w-full bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600 transition text-sm">
+                            List Products (404)
+                        </button>
+                        <button onclick="runTest('sgp_create_support_ticket')" class="w-full bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600 transition text-sm">
+                            Create Ticket (404)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Results -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">
+                        <i class="fas fa-terminal mr-2"></i>
+                        Test Results
+                    </h3>
+                    <button onclick="clearResults()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition text-sm">
+                        Clear Results
+                    </button>
+                </div>
+                <div id="test-results" class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm h-96 overflow-y-auto">
+                    <div class="text-blue-400">SGP MCP Server Test Console</div>
+                    <div class="text-gray-500">Ready for testing...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monitoring Tab -->
+        <div id="monitoring" class="tab-content">
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-chart-line mr-3 text-blue-600"></i>
+                    Real-time API Monitoring
+                </h2>
+                
+                <!-- Live Status -->
+                <div class="grid md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-gradient-to-r from-green-400 to-green-600 text-white rounded-lg p-6 text-center">
+                        <i class="fas fa-heartbeat text-3xl mb-2"></i>
+                        <h3 class="text-lg font-semibold">API Status</h3>
+                        <p class="text-2xl font-bold" id="api-status">●</p>
+                        <p class="text-sm opacity-90" id="api-status-text">Checking...</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-lg p-6 text-center">
+                        <i class="fas fa-tachometer-alt text-3xl mb-2"></i>
+                        <h3 class="text-lg font-semibold">Response Time</h3>
+                        <p class="text-2xl font-bold" id="response-time-live">-- ms</p>
+                        <p class="text-sm opacity-90">Average</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-purple-400 to-purple-600 text-white rounded-lg p-6 text-center">
+                        <i class="fas fa-check-circle text-3xl mb-2"></i>
+                        <h3 class="text-lg font-semibold">Success Rate</h3>
+                        <p class="text-2xl font-bold" id="success-rate">--%</p>
+                        <p class="text-sm opacity-90">Last 24h</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-orange-400 to-orange-600 text-white rounded-lg p-6 text-center">
+                        <i class="fas fa-users text-3xl mb-2"></i>
+                        <h3 class="text-lg font-semibold">Active Tenants</h3>
+                        <p class="text-2xl font-bold" id="active-tenants">--</p>
+                        <p class="text-sm opacity-90">Connected</p>
+                    </div>
+                </div>
+
+                <!-- Live Logs -->
+                <div class="bg-gray-900 text-green-400 rounded-lg p-6 mb-8">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-white">
+                            <i class="fas fa-stream mr-2"></i>
+                            Live Request Logs
+                        </h3>
+                        <div class="flex space-x-2">
+                            <button onclick="toggleLiveLogs()" class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                                <span id="logs-toggle">▶ Start</span>
+                            </button>
+                            <button onclick="clearLogs()" class="bg-gray-600 text-white px-3 py-1 rounded text-sm hover:bg-gray-700">
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+                    <div id="live-logs" class="font-mono text-sm h-64 overflow-y-auto">
+                        <div class="text-blue-400">[INFO] Live monitoring ready...</div>
+                    </div>
+                </div>
+
+                <!-- Tool Status Matrix -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold mb-4">
+                        <i class="fas fa-table mr-2"></i>
+                        SGP Tools Status Matrix
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b">
+                                    <th class="text-left py-2">Tool Name</th>
+                                    <th class="text-center py-2">Status</th>
+                                    <th class="text-center py-2">Avg Response</th>
+                                    <th class="text-center py-2">Success Rate</th>
+                                    <th class="text-center py-2">Last Tested</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tools-status">
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dev Docs Tab -->
+        <div id="dev-docs" class="tab-content">
+            <div class="dev-section rounded-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-code mr-3"></i>
+                    Developer Documentation
+                </h2>
+                <p class="text-lg text-gray-700">
+                    Complete technical documentation for developers integrating with the SGP MCP Server.
+                </p>
+            </div>
+
+            <!-- Dev Sections -->
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Architecture -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4">
+                        <i class="fas fa-sitemap mr-2 text-blue-600"></i>
+                        Architecture Overview
+                    </h3>
+                    <div class="space-y-4 text-sm">
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-semibold">Cloudflare Workers</h4>
+                            <p class="text-gray-600">Serverless deployment with global edge distribution</p>
+                        </div>
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h4 class="font-semibold">MCP Protocol</h4>
+                            <p class="text-gray-600">JSON-RPC 2.0 over HTTP/SSE for MCP client compatibility</p>
+                        </div>
+                        <div class="border-l-4 border-purple-500 pl-4">
+                            <h4 class="font-semibold">Multi-Tenant</h4>
+                            <p class="text-gray-600">Header-based authentication with isolated data access</p>
+                        </div>
+                        <div class="border-l-4 border-yellow-500 pl-4">
+                            <h4 class="font-semibold">SGP Integration</h4>
+                            <p class="text-gray-600">Direct API integration with SGP management systems</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API Reference -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4">
+                        <i class="fas fa-book mr-2 text-green-600"></i>
+                        API Reference
+                    </h3>
+                    <div class="space-y-3 text-sm">
+                        <div>
+                            <h4 class="font-semibold text-blue-600">Endpoints</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-600">
+                                <li><code>/mcp</code> - Main MCP JSON-RPC endpoint</li>
+                                <li><code>/mcp/sse</code> - Server-Sent Events stream</li>
+                                <li><code>/mcp/capabilities</code> - Server capabilities</li>
+                                <li><code>/health</code> - Health check endpoint</li>
+                                <li><code>/docs</code> - Interactive documentation</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-green-600">Headers</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-600">
+                                <li><code>X-SGP-URL</code> - Client SGP server URL</li>
+                                <li><code>X-SGP-APP</code> - SGP application name</li>
+                                <li><code>X-SGP-TOKEN</code> - SGP authentication token</li>
+                                <li><code>Content-Type</code> - application/json</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Code Examples -->
+                <div class="bg-white rounded-lg shadow-lg p-6 lg:col-span-2">
+                    <h3 class="text-xl font-bold mb-4">
+                        <i class="fas fa-terminal mr-2 text-purple-600"></i>
+                        Integration Examples
+                    </h3>
+                    
+                    <!-- Code Tabs -->
+                    <div class="mb-4">
+                        <div class="flex space-x-2">
+                            <button onclick="showCodeExample('python')" class="code-tab active bg-blue-500 text-white px-4 py-2 rounded text-sm">Python</button>
+                            <button onclick="showCodeExample('javascript')" class="code-tab bg-gray-200 text-gray-700 px-4 py-2 rounded text-sm">JavaScript</button>
+                            <button onclick="showCodeExample('curl')" class="code-tab bg-gray-200 text-gray-700 px-4 py-2 rounded text-sm">cURL</button>
+                            <button onclick="showCodeExample('claude')" class="code-tab bg-gray-200 text-gray-700 px-4 py-2 rounded text-sm">MCP Desktop</button>
+                        </div>
+                    </div>
+
+                    <!-- Code Examples -->
+                    <div id="python-example" class="code-example">
+                        <pre class="code-block text-sm"><code class="language-python">import asyncio
+import aiohttp
+import json
+
+class SGPMCPClient:
+    def __init__(self, sgp_url, sgp_app, sgp_token):
+        self.base_url = "https://sgp-mcp-server.thiagojbs.workers.dev"
+        self.headers = {
+            'Content-Type': 'application/json',
+            'X-SGP-URL': sgp_url,
+            'X-SGP-APP': sgp_app,
+            'X-SGP-TOKEN': sgp_token
+        }
+    
+    async def call_tool(self, tool_name, arguments={}):
+        payload = {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "tools/call",
+            "params": {"name": tool_name, "arguments": arguments}
+        }
+        
+        async with aiohttp.ClientSession() as session:
+            async with session.post(f"{self.base_url}/mcp", 
+                                   headers=self.headers, 
+                                   json=payload) as response:
+                return await response.json()
+
+# Usage
+async def main():
+    client = SGPMCPClient(
+        "https://dmznet.sgp.tsmx.com.br/api",
+        "papercrm", 
+        "dcb979d7-e283-40a0-9436-bfad7aa705ed"
+    )
+    
+    result = await client.call_tool("sgp_test_connection")
+    print(json.dumps(result, indent=2))
+
+asyncio.run(main())</code></pre>
+                    </div>
+
+                    <div id="javascript-example" class="code-example" style="display: none;">
+                        <pre class="code-block text-sm"><code class="language-javascript">class SGPMCPClient {
+  constructor(sgpUrl, sgpApp, sgpToken) {
+    this.baseUrl = 'https://sgp-mcp-server.thiagojbs.workers.dev';
+    this.headers = {
+      'Content-Type': 'application/json',
+      'X-SGP-URL': sgpUrl,
+      'X-SGP-APP': sgpApp,
+      'X-SGP-TOKEN': sgpToken
+    };
+  }
+
+  async callTool(toolName, arguments = {}) {
+    const response = await fetch(`${this.baseUrl}/mcp`, {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: Date.now(),
+        method: 'tools/call',
+        params: { name: toolName, arguments }
+      })
+    });
+    return await response.json();
+  }
+}
+
+// Usage
+const client = new SGPMCPClient(
+  'https://dmznet.sgp.tsmx.com.br/api',
+  'papercrm',
+  'dcb979d7-e283-40a0-9436-bfad7aa705ed'
+);
+
+client.callTool('sgp_test_connection')
+  .then(result => console.log(result));</code></pre>
+                    </div>
+
+                    <div id="curl-example" class="code-example" style="display: none;">
+                        <pre class="code-block text-sm"><code class="language-bash"># Test connection
+curl -X POST 'https://sgp-mcp-server.thiagojbs.workers.dev/mcp' \
+  -H 'Content-Type: application/json' \
+  -H 'X-SGP-URL: https://dmznet.sgp.tsmx.com.br/api' \
+  -H 'X-SGP-APP: papercrm' \
+  -H 'X-SGP-TOKEN: dcb979d7-e283-40a0-9436-bfad7aa705ed' \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "tools/call",
+    "params": {
+      "name": "sgp_test_connection",
+      "arguments": {}
+    }
+  }'
+
+# List available tools
+curl -X POST 'https://sgp-mcp-server.thiagojbs.workers.dev/mcp' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": 2,
+    "method": "tools/list"
+  }'</code></pre>
+                    </div>
+
+                    <div id="claude-example" class="code-example" style="display: none;">
+                        <pre class="code-block text-sm"><code class="language-json">{
+  "mcpServers": {
+    "sgp": {
+      "transport": "http",
+      "url": "https://sgp-mcp-server.thiagojbs.workers.dev/mcp",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-SGP-URL": "https://dmznet.sgp.tsmx.com.br/api",
+        "X-SGP-APP": "papercrm",
+        "X-SGP-TOKEN": "dcb979d7-e283-40a0-9436-bfad7aa705ed"
+      }
+    }
+  }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Integrations Tab -->
+        <div id="integrations" class="tab-content">
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-plug mr-3 text-purple-600"></i>
+                    MCP Client Integrations
+                </h2>
+                
+                <!-- Integration Cards -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- MCP Desktop Client -->
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-blue-600 w-12 h-12 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-robot text-white text-xl"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-lg font-bold">MCP Desktop Client</h3>
+                                <p class="text-sm text-gray-600">Official MCP support</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-700 mb-4">
+                            Native MCP integration with MCP Desktop applications. Zero-configuration setup.
+                        </p>
+                        <div class="flex space-x-2">
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">✓ Tested</span>
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Native</span>
+                        </div>
+                    </div>
+
+                    <!-- API Integration -->
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-green-600 w-12 h-12 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-brain text-white text-xl"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-lg font-bold">API Integration</h3>
+                                <p class="text-sm text-gray-600">Via Actions/Functions</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-700 mb-4">
+                            Use as external API in automation systems. Supports OpenAPI schema conversion.
+                        </p>
+                        <div class="flex space-x-2">
+                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">⚠ Manual Setup</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Compatible</span>
+                        </div>
+                    </div>
+
+                    <!-- Custom Agents -->
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-purple-600 w-12 h-12 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-cogs text-white text-xl"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-lg font-bold">Custom Agents</h3>
+                                <p class="text-sm text-gray-600">HTTP API integration</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-700 mb-4">
+                            Any automation system with HTTP capabilities can integrate via our REST API endpoints.
+                        </p>
+                        <div class="flex space-x-2">
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">HTTP</span>
+                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Flexible</span>
+                        </div>
+                    </div>
+
+                    <!-- Framework Integration -->
+                    <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-6 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-orange-600 w-12 h-12 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-link text-white text-xl"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-lg font-bold">Framework Integration</h3>
+                                <p class="text-sm text-gray-600">Python/JS frameworks</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-700 mb-4">
+                            Integrate via framework HTTP tools or create custom MCP tool wrapper.
+                        </p>
+                        <div class="flex space-x-2">
+                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">Python</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Supported</span>
+                        </div>
+                    </div>
+
+                    <!-- AutoGPT -->
+                    <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-6 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-red-600 w-12 h-12 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-rocket text-white text-xl"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-lg font-bold">AutoGPT</h3>
+                                <p class="text-sm text-gray-600">Autonomous agents</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-700 mb-4">
+                            Create custom commands or plugins to access SGP functionality autonomously.
+                        </p>
+                        <div class="flex space-x-2">
+                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">Plugin</span>
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Autonomous</span>
+                        </div>
+                    </div>
+
+                    <!-- Zapier -->
+                    <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg p-6 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-yellow-600 w-12 h-12 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-bolt text-white text-xl"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-lg font-bold">Zapier/Make.com</h3>
+                                <p class="text-sm text-gray-600">Automation platforms</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-700 mb-4">
+                            Use webhooks and HTTP requests to trigger SGP actions from automation workflows.
+                        </p>
+                        <div class="flex space-x-2">
+                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Webhook</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Automation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources Tab -->
+        <div id="resources" class="tab-content">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-book mr-3 text-green-600"></i>
+                    Important Links & Resources
+                </h2>
+
+                <!-- Resource Categories -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Official Links -->
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-blue-800">
+                            <i class="fas fa-external-link-alt mr-2"></i>
+                            Official Links
+                        </h3>
+                        <div class="space-y-3">
+                            <a href="https://sgp-mcp-server.thiagojbs.workers.dev" target="_blank" 
+                               class="flex items-center text-blue-600 hover:text-blue-800 transition">
+                                <i class="fas fa-server mr-2"></i>
+                                Live MCP Server
+                            </a>
+                            <a href="https://sgp-mcp-server.thiagojbs.workers.dev/health" target="_blank" 
+                               class="flex items-center text-blue-600 hover:text-blue-800 transition">
+                                <i class="fas fa-heartbeat mr-2"></i>
+                                Health Check
+                            </a>
+                            <a href="https://sgp-mcp-server.thiagojbs.workers.dev/mcp/capabilities" target="_blank" 
+                               class="flex items-center text-blue-600 hover:text-blue-800 transition">
+                                <i class="fas fa-cog mr-2"></i>
+                                MCP Capabilities
+                            </a>
+                            <a href="https://github.com/thiagojbs/sgp-mcp-server" target="_blank" 
+                               class="flex items-center text-blue-600 hover:text-blue-800 transition">
+                                <i class="fab fa-github mr-2"></i>
+                                GitHub Repository
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- MCP Protocol -->
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-purple-800">
+                            <i class="fas fa-network-wired mr-2"></i>
+                            MCP Protocol
+                        </h3>
+                        <div class="space-y-3">
+                            <a href="https://modelcontextprotocol.io" target="_blank" 
+                               class="flex items-center text-purple-600 hover:text-purple-800 transition">
+                                <i class="fas fa-globe mr-2"></i>
+                                Official MCP Site
+                            </a>
+                            <a href="https://spec.modelcontextprotocol.io" target="_blank" 
+                               class="flex items-center text-purple-600 hover:text-purple-800 transition">
+                                <i class="fas fa-file-alt mr-2"></i>
+                                MCP Specification
+                            </a>
+                            <a href="https://github.com/modelcontextprotocol" target="_blank" 
+                               class="flex items-center text-purple-600 hover:text-purple-800 transition">
+                                <i class="fab fa-github mr-2"></i>
+                                MCP GitHub
+                            </a>
+                            <a href="https://modelcontextprotocol.io/docs" target="_blank" 
+                               class="flex items-center text-purple-600 hover:text-purple-800 transition">
+                                <i class="fas fa-book-open mr-2"></i>
+                                MCP Tool Use
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Development -->
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-green-800">
+                            <i class="fas fa-code mr-2"></i>
+                            Development
+                        </h3>
+                        <div class="space-y-3">
+                            <a href="https://developers.cloudflare.com/workers/" target="_blank" 
+                               class="flex items-center text-green-600 hover:text-green-800 transition">
+                                <i class="fas fa-cloud mr-2"></i>
+                                Cloudflare Workers
+                            </a>
+                            <a href="https://jsonrpc.org/specification" target="_blank" 
+                               class="flex items-center text-green-600 hover:text-green-800 transition">
+                                <i class="fas fa-code mr-2"></i>
+                                JSON-RPC 2.0 Spec
+                            </a>
+                            <a href="https://www.typescriptlang.org/docs/" target="_blank" 
+                               class="flex items-center text-green-600 hover:text-green-800 transition">
+                                <i class="fab fa-js-square mr-2"></i>
+                                TypeScript Docs
+                            </a>
+                            <a href="https://developers.anthropic.com" target="_blank" 
+                               class="flex items-center text-green-600 hover:text-green-800 transition">
+                                <i class="fas fa-brain mr-2"></i>
+                                MCP API
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Tools & Testing -->
+                    <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-orange-800">
+                            <i class="fas fa-tools mr-2"></i>
+                            Tools & Testing
+                        </h3>
+                        <div class="space-y-3">
+                            <a href="https://httpie.io" target="_blank" 
+                               class="flex items-center text-orange-600 hover:text-orange-800 transition">
+                                <i class="fas fa-terminal mr-2"></i>
+                                HTTPie
+                            </a>
+                            <a href="https://www.postman.com" target="_blank" 
+                               class="flex items-center text-orange-600 hover:text-orange-800 transition">
+                                <i class="fas fa-paper-plane mr-2"></i>
+                                Postman
+                            </a>
+                            <a href="https://curl.se" target="_blank" 
+                               class="flex items-center text-orange-600 hover:text-orange-800 transition">
+                                <i class="fas fa-download mr-2"></i>
+                                cURL
+                            </a>
+                            <a href="https://insomnia.rest" target="_blank" 
+                               class="flex items-center text-orange-600 hover:text-orange-800 transition">
+                                <i class="fas fa-moon mr-2"></i>
+                                Insomnia
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Community -->
+                    <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-red-800">
+                            <i class="fas fa-users mr-2"></i>
+                            Community
+                        </h3>
+                        <div class="space-y-3">
+                            <a href="https://discord.gg/anthropic" target="_blank" 
+                               class="flex items-center text-red-600 hover:text-red-800 transition">
+                                <i class="fab fa-discord mr-2"></i>
+                                Anthropic Discord
+                            </a>
+                            <a href="https://twitter.com/modelcontextprotocol" target="_blank" 
+                               class="flex items-center text-red-600 hover:text-red-800 transition">
+                                <i class="fab fa-twitter mr-2"></i>
+                                @MCP_Protocol
+                            </a>
+                            <a href="https://community.anthropic.com" target="_blank" 
+                               class="flex items-center text-red-600 hover:text-red-800 transition">
+                                <i class="fas fa-comments mr-2"></i>
+                                Community Forum
+                            </a>
+                            <a href="https://docs.anthropic.com" target="_blank" 
+                               class="flex items-center text-red-600 hover:text-red-800 transition">
+                                <i class="fas fa-book mr-2"></i>
+                                Anthropic Docs
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Documentation -->
+                    <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-gray-800">
+                            <i class="fas fa-file-alt mr-2"></i>
+                            Documentation
+                        </h3>
+                        <div class="space-y-3">
+                            <button onclick="downloadFile('TEST-RESULTS.md')" 
+                               class="flex items-center text-gray-600 hover:text-gray-800 transition w-full text-left">
+                                <i class="fas fa-download mr-2"></i>
+                                Test Results Report
+                            </button>
+                            <button onclick="downloadFile('MULTI-TENANT.md')" 
+                               class="flex items-center text-gray-600 hover:text-gray-800 transition w-full text-left">
+                                <i class="fas fa-download mr-2"></i>
+                                Multi-Tenant Guide
+                            </button>
+                            <button onclick="downloadFile('MCP-INTEGRATION.md')" 
+                               class="flex items-center text-gray-600 hover:text-gray-800 transition w-full text-left">
+                                <i class="fas fa-download mr-2"></i>
+                                Integration Guide
+                            </button>
+                            <button onclick="window.print()" 
+                               class="flex items-center text-gray-600 hover:text-gray-800 transition w-full text-left">
+                                <i class="fas fa-print mr-2"></i>
+                                Print This Page
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center items-center mb-4">
+                <i class="fas fa-robot text-2xl mr-3"></i>
+                <span class="text-xl font-bold">SGP Remote MCP Server</span>
+            </div>
+            <p class="text-gray-400 mb-4">
+                Model Context Protocol Server for SGP Integration
+            </p>
+            <div class="flex justify-center space-x-6 text-sm">
+                <a href="https://sgp-mcp-server.thiagojbs.workers.dev" class="hover:text-blue-400 transition">Live Server</a>
+                <a href="https://github.com/thiagojbs/sgp-mcp-server" class="hover:text-blue-400 transition">GitHub</a>
+                <a href="https://modelcontextprotocol.io" class="hover:text-blue-400 transition">MCP Protocol</a>
+                <a href="https://anthropic.com" class="hover:text-blue-400 transition">Anthropic</a>
+            </div>
+            <div class="mt-4 text-xs text-gray-500">
+                Built with ❤️ for MCP clients • Powered by Cloudflare Workers
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

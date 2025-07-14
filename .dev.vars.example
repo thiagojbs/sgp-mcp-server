@@ -1,0 +1,14 @@
+# SGP API Configuration
+SGP_BASE_URL=https://demo.sgp.net.br/api
+SGP_USERNAME=your_username
+SGP_PASSWORD=your_password
+SGP_API_TOKEN=your_api_token
+SGP_APP_NAME=sgp-remote-mcp
+SGP_TIMEOUT=30000
+
+# OAuth Configuration (optional)
+GITHUB_CLIENT_ID=your_github_client_id
+GITHUB_CLIENT_SECRET=your_github_client_secret
+
+# Development
+NODE_ENV=development

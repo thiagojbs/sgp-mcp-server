@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "sgp-remote": {
+      "transport": "http",
+      "url": "https://sgp-mcp-server.thiagojbs.workers.dev/mcp",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    "sgp-local": {
+      "transport": "http", 
+      "url": "http://localhost:8787/mcp",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    }
+  }
+}
